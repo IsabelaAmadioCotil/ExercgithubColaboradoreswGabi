@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+</head>
+<body>
+    <h1>Cadastro de Clientes</h1>
+
+    <form id="formCadastro" onsubmit="return validarFormulario()">
+
+        <input type="radio" name="tipo" value="fisica" id="pf" checked onclick="trocarCampos('PF');">
+        <label for="fisica">Pessoa Física</label><br>
+
+        <input type="radio" name="tipo" value="juridica" id="pj" onclick="trocarCampos('PJ');">
+        <label for="juridica">Pessoa Jurídica</label><br><br>
+
+        <!--Campos para pessoa fisica-->
+        <div id="camposPF">
+            <label for="nome">👩🏻Nome:</label><br>
+            <input type="text" name="nome" id="nome" size="40"><br><br>
+
+            <label for="cpf">CPF:</label><br>
+            <input type="text" name="cpf" id="cpf"><br><br>
+        </div>
+
+        <!--Campos para pessoa juridica-->
+        <div id="camposPJ" style="display: none;">
+            <label for="razao">🤵🏻‍♂️Razão Social:</label><br>
+            <input type="text" name="razao" id="razao" size="40"><br><br>
+
+            <label for="cnpj">CNPJ:</label><br>
+            <input type="text" name="cnpj" id="cnpj"><br><br>
+        </div>
+
+        <!--Campos comuns  -->
+        <label for="telefone">Telefone:</label><br>
+        <input type="text" name="telefone" id="telefone"><br><br>
+
+        <label for="email">E-mail:</label><br>
+        <input type="text" name="email" id="email" size="40"><br><br>
+
+        <label for="endereço">Endereço:</label><br>
+        <input type="text" name="endereco" id="endereco" size="60"><br><br>
+
+        <button type="submit">Cadastrar</button>
+
+    </form>
+
+    <p id="mensagem"></p>
+
+    <script>
+        const pfRadio = document.getElementById('pf');
+        const pjRadio = document.getElementById('pj');
+        const camposPF = document.getElementById('camposPF');
+        const camposPJ = document.getElementById('camposPJ');
+        //const msg = document.getElementById('mensagem');
+        
+
+        function trocarCampos(tipo) {
+            if (tipo == 'PF') {
+                camposPF.style.display = 'block';
+                camposPJ.style.display = 'none';
+            } else if (tipo == 'PJ') {
+                camposPF.style.display = 'none';
+                camposPJ.style.display = 'block';
+            }
+        }
+
+        function validarFormulario() {
+
+            const msg = document.getElementById("mensagem");
+
+            //pega o tipo selecionado
+            const tipo = document.querySelector('input[name="tipo"]:checked').value;
+
+            if(tipo === "fisica") {
+                const nome = document.getElementById("nome").value.trim();
+                const cpf = document.getElementById("cpf").value.trim();
+
+                if(!nome || !cpf)
+                    {
+                        msg.textContent = "Informe o nome e op CPF!";
+                        msg.style.color = "red";
+                        document.getElementById("nome").style.borderColor = "red";
+                        document.getElementById("cpf").style.borderColor = "red";
+                        return false;
+                    }
+            }
+             else {
+                const razao = document.getElementById("razao").value.trim();
+                const cnpj = document.getElementById("cnpj").value.trim();
+                
+                if (!razao || !cnpj){
+                    msg.textContent = "Informe a Razão Social e o CNPJ!";
+                    msg.style.color = "red";
+                    document.getElementById("cnpj").style.borderColor = "red";
+                    document.getElementById("razao").style.borderColor = "red";
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    </script>
+
+</body>
+</html>
